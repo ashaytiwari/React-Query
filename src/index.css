@@ -5,7 +5,7 @@ body {
   color: #ddd;
   text-align: center;
 }
-.App {
+/* .App {
   width: 960px;
   margin: 0 auto;
 }
@@ -49,4 +49,4 @@ button:hover {
 button:disabled {
   opacity: 0.2;
   cursor: not-allowed;
-}
+} */
