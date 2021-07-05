@@ -26,10 +26,14 @@ function App() {
     }
   ];
 
+  const newExpenseHandler = (expense) => {
+    console.log(expense);
+  };
+
   return (
     <div>
       <h2>Expense Tracker</h2>
-      <NewExpense />
+      <NewExpense onNewExpenseSave={newExpenseHandler} />
       <Expenses expenseData={expenses} />
     </div>
   );
