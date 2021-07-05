@@ -5,6 +5,7 @@ const ExpenseForm = (props) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
+  console.log(date);
 
   const addExpenseHandler = (event) => {
     event.preventDefault();
@@ -12,7 +13,7 @@ const ExpenseForm = (props) => {
     const expenseData = {
       title: title,
       amount: amount,
-      date: date
+      date: new Date(date)
     };
 
     props.onSaveExpenseData(expenseData);
