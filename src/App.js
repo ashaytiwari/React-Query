@@ -34,7 +34,6 @@ function App() {
       return [expense, ...prevState];
     });
   };
-  console.log(expenses);
 
   return (
     <div>

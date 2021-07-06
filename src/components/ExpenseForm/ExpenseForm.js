@@ -5,7 +5,6 @@ const ExpenseForm = (props) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
-  console.log(date);
 
   const addExpenseHandler = (event) => {
     event.preventDefault();
