@@ -49,7 +49,7 @@ const AddUser = (props) => {
   };
 
   return (
-    <div>
+    <>
       {error && (
         <Overlay
           title={error?.title}
@@ -76,7 +76,7 @@ const AddUser = (props) => {
           <Button type="submit">Add User</Button>
         </form>
       </Card>
-    </div>
+    </>
   );
 };
 
