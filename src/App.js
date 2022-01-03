@@ -1,26 +1,45 @@
-import "./App.css";
-import Navbar from "./components/Navbar";
 import React, { useState } from "react";
-import Planets from "./components/Planets";
-import Peoples from "./components/People";
-import { QueryClient, QueryClientProvider } from "react-query";
 
-const queryClient = new QueryClient();
+import MoviesList from "./components/MovieList/MoviesList";
+import "./App.css";
 
 function App() {
-  const [page, setPage] = useState("planets");
+  const [dummyMovies, setDummyMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchMoviesHandler = () => {
+    setIsLoading(true);
+    fetch("https://swapi.dev/api/films/")
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        const transformedData = res.results.map((item) => {
+          return {
+            id: item.episode_id,
+            title: item.title,
+            releaseDate: item.release_date,
+            openingText: item.opening_crawl
+          };
+        });
+        setDummyMovies(transformedData);
+        setIsLoading(false);
+      });
+  };
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="App">
-        <h1>Star Wars Info</h1>
-        <Navbar setPage={setPage} />
-        <div className="content">
-          {page === "planets" ? <Planets /> : <Peoples />}
-        </div>
-      </div>
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-    </QueryClientProvider>
+    <React.Fragment>
+      <section>
+        <button onClick={fetchMoviesHandler}>Fetch Movies</button>
+      </section>
+      <section>
+        {isLoading && <h4>Loading...</h4>}
+        {!isLoading && dummyMovies.length > 0 && (
+          <MoviesList movies={dummyMovies} />
+        )}
+        {!isLoading && dummyMovies.length === 0 && <h4>No data found...</h4>}
+      </section>
+    </React.Fragment>
   );
 }
 
