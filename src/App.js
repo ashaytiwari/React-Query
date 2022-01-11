@@ -1,26 +1,29 @@
-import "./App.css";
-import Navbar from "./components/Navbar";
-import React, { useState } from "react";
-import Planets from "./components/Planets";
-import Peoples from "./components/People";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { Switch, Route, Redirect } from "react-router-dom";
+import { useContext } from "react/cjs/react.development";
 
-const queryClient = new QueryClient();
+import Layout from "./components/Layout/Layout";
+import UserProfile from "./components/Profile/UserProfile";
+import AuthPage from "./pages/AuthPage";
+import HomePage from "./pages/HomePage";
+import AuthContext from "./store/auth-context";
 
 function App() {
-  const [page, setPage] = useState("planets");
+  const authCtx = useContext(AuthContext);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="App">
-        <h1>Star Wars Info</h1>
-        <Navbar setPage={setPage} />
-        <div className="content">
-          {page === "planets" ? <Planets /> : <Peoples />}
-        </div>
-      </div>
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-    </QueryClientProvider>
+    <Layout>
+      <Switch>
+        <Route path="/" exact>
+          <HomePage />
+        </Route>
+        <Route path="/auth">
+          {!authCtx.isLoggedIn ? <AuthPage /> : <Redirect to={"/"} />}
+        </Route>
+        <Route path="/profile">
+          {authCtx.isLoggedIn ? <UserProfile /> : <Redirect to={"/"} />}
+        </Route>
+      </Switch>
+    </Layout>
   );
 }
 
