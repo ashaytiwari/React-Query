@@ -1,27 +1,39 @@
+import React, { Component } from "react";
+
 import "./App.css";
-import Navbar from "./components/Navbar";
-import React, { useState } from "react";
-import Planets from "./components/Planets";
-import Peoples from "./components/People";
-import { QueryClient, QueryClientProvider } from "react-query";
+import Modal from "./components/Modal/Modal";
+import Backdrop from "./components/Backdrop/Backdrop";
+import List from "./components/List/List";
 
-const queryClient = new QueryClient();
+class App extends Component {
+  constructor(props) {
+    super(props);
 
-function App() {
-  const [page, setPage] = useState("planets");
+    this.state = {
+      isModalOpen: false
+    };
+  }
 
-  return (
-    <QueryClientProvider client={queryClient}>
+  modalHandler = () => {
+    this.setState({
+      isModalOpen: !this.state.isModalOpen
+    });
+  };
+
+  render() {
+    return (
       <div className="App">
-        <h1>Star Wars Info</h1>
-        <Navbar setPage={setPage} />
-        <div className="content">
-          {page === "planets" ? <Planets /> : <Peoples />}
-        </div>
+        <h1>React Animations</h1>
+        <Modal show={this.state.isModalOpen} closed={this.modalHandler} />
+        <Backdrop show={this.state.isModalOpen} />
+        <button className="Button" onClick={this.modalHandler}>
+          Open Modal
+        </button>
+        <h3>Animating Lists</h3>
+        <List />
       </div>
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-    </QueryClientProvider>
-  );
+    );
+  }
 }
 
 export default App;
